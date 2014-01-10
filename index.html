@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="transform-object : transform objects using deep transformations" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>transform-object</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/pluma/transform-object">View on GitHub</a>
+
+          <h1 id="project_title">transform-object</h1>
+          <h2 id="project_tagline">transform objects using deep transformations</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/pluma/transform-object/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/pluma/transform-object/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="synopsis" class="anchor" href="#synopsis"><span class="octicon octicon-link"></span></a>Synopsis</h1>
+
+<p><strong>transform-object</strong> transforms objects.</p>
+
+<p><a href="https://travis-ci.org/pluma/transform-object"><img src="https://travis-ci.org/pluma/transform-object.png?branch=master" alt="Build Status"></a> <a href="http://badge.fury.io/js/transform-object"><img src="https://badge.fury.io/js/transform-object.png" alt="NPM version"></a> <a href="https://david-dm.org/pluma/transform-object"><img src="https://david-dm.org/pluma/transform-object.png" alt="Dependencies"></a></p>
+
+<h1>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h1>
+
+<h2>
+<a name="with-npm" class="anchor" href="#with-npm"><span class="octicon octicon-link"></span></a>With NPM</h2>
+
+<div class="highlight highlight-sh"><pre>npm install transform-object
+</pre></div>
+
+<h2>
+<a name="from-source" class="anchor" href="#from-source"><span class="octicon octicon-link"></span></a>From source</h2>
+
+<div class="highlight highlight-sh"><pre>git clone https://github.com/pluma/transform-object.git
+<span class="nb">cd </span>transform-object
+npm install
+make <span class="nb">test</span>
+</pre></div>
+
+<h1>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h1>
+
+<h2>
+<a name="transformobj-transformation" class="anchor" href="#transformobj-transformation"><span class="octicon octicon-link"></span></a>transform(obj, transformation)</h2>
+
+<p>Transforms the given object by mapping it against the given transformation recursively.</p>
+
+<p>If <code>obj</code> is an array and <code>transformation</code> is an array, returns an array of the results of applying each transformation in the <code>transformation</code> array to the respective object in the <code>obj</code> array:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">function</span> <span class="nx">upper</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">();}</span>
+<span class="kd">function</span> <span class="nx">lower</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">();}</span>
+<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">transform</span><span class="p">([</span><span class="s1">'Foo'</span><span class="p">,</span> <span class="s1">'Bar'</span><span class="p">,</span> <span class="s1">'Qux'</span><span class="p">],</span> <span class="p">[</span><span class="nx">upper</span><span class="p">,</span> <span class="nx">lower</span><span class="p">]);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span> <span class="c1">// ['FOO', 'bar', 'Qux']</span>
+</pre></div>
+
+<p>If <code>obj</code> is an array and <code>transformation</code> is not an array, returns an array of the results of applying the <code>transformation</code> to each object in the <code>obj</code> array:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">function</span> <span class="nx">upper</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">();}</span>
+<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">transform</span><span class="p">([</span><span class="s1">'Foo'</span><span class="p">,</span> <span class="s1">'Bar'</span><span class="p">,</span> <span class="s1">'Qux'</span><span class="p">],</span> <span class="nx">upper</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span> <span class="c1">// ['FOO', 'BAR', 'QUX']</span>
+</pre></div>
+
+<p>If <code>obj</code> is an object and <code>transformation</code> is an object, returns a new object with each property set to the result of applying the property of the <code>transformation</code> to the respective property of the <code>obj</code>:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">function</span> <span class="nx">upper</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">();}</span>
+<span class="kd">function</span> <span class="nx">lower</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">();}</span>
+<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">transform</span><span class="p">({</span><span class="nx">a</span><span class="o">:</span> <span class="s1">'Foo'</span><span class="p">,</span> <span class="nx">b</span><span class="o">:</span> <span class="s1">'Bar'</span><span class="p">,</span> <span class="nx">c</span><span class="o">:</span> <span class="s1">'Qux'</span><span class="p">},</span> <span class="p">{</span><span class="nx">a</span><span class="o">:</span> <span class="nx">upper</span><span class="p">,</span> <span class="nx">b</span><span class="o">:</span> <span class="nx">lower</span><span class="p">});</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span> <span class="c1">// {a: 'FOO', b: 'bar', c: 'Qux'}</span>
+</pre></div>
+
+<p>If <code>transformation</code> is a <code>Function</code>, returns the result of calling it with the given <code>obj</code> as argument:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">function</span> <span class="nx">upper</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">();}</span>
+<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">transform</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="nx">upper</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span> <span class="c1">// 'FOO'</span>
+</pre></div>
+
+<p>If <code>transformation</code> is <code>undefined</code>, returns the <code>obj</code>:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">transform</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span> <span class="c1">// 'foo'</span>
+</pre></div>
+
+<p>Otherwise returns the <code>transformation</code>:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">transform</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span> <span class="c1">// 'bar'</span>
+</pre></div>
+
+<h1>
+<a name="unlicense" class="anchor" href="#unlicense"><span class="octicon octicon-link"></span></a>Unlicense</h1>
+
+<p>This is free and unencumbered public domain software. For more information, see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanying <a href="https://github.com/pluma/transform-object/blob/master/UNLICENSE">UNLICENSE</a> file.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">transform-object maintained by <a href="https://github.com/pluma">pluma</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
