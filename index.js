@@ -1,4 +1,4 @@
-/*! transform-object 0.1.0 Original author Alan Plum <me@pluma.io>. Released into the Public Domain under the UNLICENSE. @preserve */
+/*! transform-object 0.1.1 Original author Alan Plum <me@pluma.io>. Released into the Public Domain under the UNLICENSE. @preserve */
 module.exports = transform;
 
 function transform(obj, transformer) {

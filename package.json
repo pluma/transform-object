@@ -1,6 +1,6 @@
 {
   "name": "transform-object",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Alan Plum <me@pluma.io>",
   "description": "Transforms objects.",
   "licenses": {
@@ -21,7 +21,7 @@
   "dependencies": {
   },
   "devDependencies": {
-    "mocha": "~1.16",
+    "mocha": "~1.17",
     "expect.js": "~0.2",
     "jshint": "~2.4"
   },
